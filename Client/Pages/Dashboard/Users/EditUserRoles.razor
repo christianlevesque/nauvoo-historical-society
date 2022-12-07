@@ -1,0 +1,27 @@
+@using Core
+@using Core.Users
+@inherits FormPage<EditUserRoles, Client.Services.IAdminUserService, UserUpdateRolesDto>
+
+<DocTitle Title="Edit user's roles"/>
+
+@if (_user == null)
+{
+	<FullWidthLoadingSpinner/>
+	return;
+}
+
+<StandardForm Model="Model"
+              OnSubmit="OnSubmit"
+              Title="@($"Edit {_user.UserName}'s roles")"
+              SubmitText="Update roles">
+	<Information>
+		<ErrorMessage Message="@ErrorMessage"/>
+	</Information>
+
+	<Fields>
+		<CheckboxAggregator @ref="@_aggregator"
+		                    InitialSelected="_user.Roles">
+			<Checkbox Value="@Roles.Admin"/>
+		</CheckboxAggregator>
+	</Fields>
+</StandardForm>

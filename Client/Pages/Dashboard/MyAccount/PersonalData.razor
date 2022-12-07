@@ -1,0 +1,22 @@
+<DocTitle Title="Personal data"/>
+
+<Card Title="Personal data">
+	<CardContent>
+		<MudText>
+			By creating an account, you give us personal data that we store. You have the right to know what data we have. You also have the right to request that we delete your personal data.
+		</MudText>
+
+		<MudText Color="Color.Warning">
+			Deleting your personal data from our servers will also delete your account. This cannot be undone!
+		</MudText>
+	</CardContent>
+
+	<CardActions>
+		<PrimaryButton OnClick="DownloadPersonalData">
+        		Download personal data
+        	</PrimaryButton>
+        	<ErrorButton OnClick="LaunchDeleteAccountDialog">
+        		Delete personal data
+        	</ErrorButton>
+	</CardActions>
+</Card>

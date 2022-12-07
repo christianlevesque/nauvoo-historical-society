@@ -1,0 +1,21 @@
+@inherits ActionPage<DeleteAccountConfirmation, Client.Services.IAccountService>
+
+<Card HeaderClass="mud-theme-error"
+      Title="Delete your data">
+	<CardContent>
+		Are you sure you want to delete your data? We will also have to delete your account. This cannot be undone!
+		<ErrorMessage Message="@ErrorMessage"/>
+	</CardContent>
+	<CardActions>
+		<ErrorButton Variant="Variant.Filled"
+		             Class="mr-3"
+		             OnClick="HandleSubmit">
+			Yes, delete my data and account
+		</ErrorButton>
+
+		<PrimaryButton Variant="Variant.Outlined"
+		               OnClick="Close">
+			No, keep my data and account
+		</PrimaryButton>
+	</CardActions>
+</Card>

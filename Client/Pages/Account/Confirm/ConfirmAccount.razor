@@ -1,0 +1,22 @@
+@using Core.Account
+@inherits ActionPage<ConfirmAccount, Client.Services.IAccountService, ConfirmAccountDto>
+@layout StandaloneNarrowLayout
+
+<DocTitle Title="Confirming your account"/>
+
+<Heading1>
+	Confirming account
+</Heading1>
+
+@if (Loading)
+{
+	<MudText>
+		We are confirming your account. Hold on...
+	</MudText>
+}
+else
+{
+	<MudText Color="Color.Error">
+		@ErrorMessage
+	</MudText>
+}

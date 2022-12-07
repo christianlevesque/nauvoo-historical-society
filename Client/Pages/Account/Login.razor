@@ -1,0 +1,32 @@
+@using Client.Tools
+@using Core.Account
+@inherits FormPage<Login, Client.Services.IAccountService, LoginDto>
+@layout StandaloneNarrowLayout
+
+<DocTitle Title="Log in"/>
+
+<StandardForm Model="@Model"
+              OnSubmit="OnSubmit"
+              Title="Log in"
+              SubmitText="Log in">
+	<Information>
+		<ErrorMessage Message="@ErrorMessage"/>
+	</Information>
+
+	<Fields>
+		<MudTextField @bind-Value="Model.AccountName"
+		              For="() => Model.AccountName"
+		              Label="Username or email address"/>
+		<MudTextField @bind-Value="Model.Password"
+		              For="() => Model.Password"
+		              InputType="InputType.Password"
+		              Label="Password"/>
+		<Honeypot @bind-Value="Model.SecretKeyField"/>
+	</Fields>
+
+	<MoreActions>
+		<SecondaryButton Link="@Urls.Account.ForgotPassword.Index">
+			I forgot my password
+		</SecondaryButton>
+	</MoreActions>
+</StandardForm>

@@ -1,0 +1,10 @@
+<PrimaryButton ButtonType="ButtonType.Submit" OnClick="() => OnClick?.Invoke()">
+	@if (IsLoading)
+	{
+		<MudProgressCircular Class="ml-1 mr-3"
+		                     Color="Color.Primary"
+		                     Size="Size"
+		                     Indeterminate/>
+	}
+	@ChildContent
+</PrimaryButton>

@@ -1,0 +1,29 @@
+﻿@using Core.Infrastructure;
+@using Client.Tools
+@inherits FormPage<EditStateData, Client.Services.Infrastructure.IStateService, StateDto>
+
+<DocTitle Title="@($"Edit {Model.Name}")"></DocTitle>
+
+<StandardForm Model="Model"
+              OnSubmit="OnSubmit"
+              Title="@($"Edit {Model.Name}")"
+              SubmitText="Update state">
+	<Information>
+		<SuccessMessage Message="@SuccessMessage"/>
+	</Information>
+
+	<Fields>
+		<MudTextField @bind-Value="@Model.Name"
+		              Label="State name"
+		              Immediate/>
+		<MudTextField @bind-Value="@Model.Abbreviation"
+		              Label="State abbreviation"
+		              Immediate/>
+	</Fields>
+
+	<MoreActions>
+		<SecondaryButton Link="@Urls.Dashboard.States.Index">
+			Back to states listing
+		</SecondaryButton>
+	</MoreActions>
+</StandardForm>

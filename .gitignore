@@ -1,0 +1,17 @@
+# IDE
+.idea/
+*.iml
+*.sln.ide
+_ReSharper.*
+*.user
+*.suo
+
+# .NET
+[Oo]bj/
+[Bb]in/
+[Bb]uild/
+.nuget/
+*.log
+
+# OS
+*DS_Store

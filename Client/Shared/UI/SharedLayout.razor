@@ -1,0 +1,17 @@
+@using Client.Tools.Themes
+
+<AppTheme/>
+
+<MudLayout>
+	<AppBar>
+		<MainLayoutDrawerContent/>
+	</AppBar>
+
+	<MudMainContent Class="full-height d-flex flex-column">
+		<div class="flex-grow-1">
+			@ChildContent
+		</div>
+
+		<SiteFooter/>
+	</MudMainContent>
+</MudLayout>

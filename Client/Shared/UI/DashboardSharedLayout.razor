@@ -1,0 +1,20 @@
+<AppTheme/>
+
+<MudLayout>
+	<DashboardDrawer/>
+
+	<MudMainContent Class="full-height d-flex flex-column">
+		<div class="flex-grow-1">
+			@if (LoadingState.Loading)
+			{
+				<div class="absolute mud-width-full" style="top:0;left:0;right:0;z-index:9999">
+					<MudProgressLinear Color="Color.Primary" Indeterminate/>
+				</div>
+			}
+
+			@ChildContent
+		</div>
+
+		<SiteFooter/>
+	</MudMainContent>
+</MudLayout>
