@@ -1,25 +1,46 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<partial name="_Meta"/>
+	<meta charset="utf-8"/>
+	<meta name="viewport"
+	      content="width=device-width, initial-scale=1.0"/>
+	<base href="/"/>
 
-	<title>@ViewData[ViewDataKeys.Title] | #sitename#</title> <!-- TODO: set up site identity -->
+	<!-- Stock MudBlazor -->
+	<link rel="preconnect"
+	      href="https://fonts.gstatic.com"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+	      rel="stylesheet"/>
 
-	@await RenderSectionAsync("Seo", required: false)
-	@await RenderSectionAsync("Scripts", required: false);
+	<!-- MudBlazor -->
+	<link href="/_content/MudBlazor/MudBlazor.min.css"
+	      rel="stylesheet"/>
+	<link href="/css/main.css"
+	      rel="stylesheet"/>
+	<!-- uncomment for component-scoped CSS files -->
+	<!--    <link href="/Client.styles.css" rel="stylesheet" />-->
+	<component type="typeof(HeadOutlet)"
+	           render-mode="WebAssemblyPrerendered"/>
 </head>
 
-<body class="@CssClasses.Body">
+<body>
 
-<partial name="_StandardNav"/>
+@RenderBody()
 
-<main class="@CssClasses.Main"
-      role="main">
-	@RenderBody()
-</main>
+<div id="blazor-error-ui">
+	An unhandled error has occurred.
+	<a href=""
+	   class="reload">Reload</a>
+	<a class="dismiss">🗙</a>
+</div>
 
-<partial name="_Footer"/>
-
+<script src="/_framework/blazor.webassembly.js"></script>
+<script src="/_content/MudBlazor/MudBlazor.min.js"></script>
+<script src="/js/interop.js"></script>
 </body>
+
 </html>

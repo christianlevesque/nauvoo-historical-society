@@ -6,8 +6,6 @@ using Server.Policies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,7 +13,6 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Server.Tools;
-using Server.Tools.Constants;
 using Services;
 
 var path = $"{Directory.GetCurrentDirectory()}/log";
@@ -46,23 +43,26 @@ try
 			.WriteTo.Debug();
 	});
 
-	AddApiAuthentication(builder.Services, builder.Configuration); // TODO: remove or disable if using SSR
-	AddStandardAuthentication(builder.Services); // TODO: remove or disable if using Blazor client
+	AddApiAuthentication(builder.Services, builder.Configuration);
 	AddCustomAuthorization(builder.Services);
 
 	builder.Services
-		.AddServerServices(builder.Environment)
-		.AddServices(builder.Configuration, builder.Environment);
+		.AddServices(builder.Configuration, builder.Environment)
+		.AddServerServices(builder.Environment, builder.Configuration);
 
 	var app = builder.Build();
 
-	// TODO: remove or disable if using Blazor client
-	app.UseExceptionHandler("/Error");
+	if (app.Environment.IsDevelopment())
+	{
+		app.UseDeveloperExceptionPage();
+		app.UseWebAssemblyDebugging();
+	}
+
+	app.UseBlazorFrameworkFiles();
+	app.UseStaticFiles();
 
 	app.UseSerilogRequestLogging();
 	app.UseRouting();
-
-	app.UseStaticFiles();
 
 	if (app.Environment.IsDevelopment())
 	{
@@ -74,11 +74,9 @@ try
 	app.UseEndpoints(e =>
 	{
 		e.MapControllers();
-		e.MapRazorPages(); // TODO: remove or disable if using Blazor client
+		e.MapRazorPages();
+		e.MapFallbackToPage("/_Host");
 	});
-
-	// TODO: remove or disable if using Blazor client
-	app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 	app.Run();
 }
@@ -92,63 +90,38 @@ finally
 	Log.CloseAndFlush();
 }
 
-// TODO: remove or disable if using SSR
 void AddApiAuthentication(IServiceCollection services, IConfiguration config)
 {
 	var jwt = config.GetSection("Jwt");
 
 	// Set up Authentication
 	services.AddAuthentication(o =>
-	        {
-		        o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-		        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-	        })
-	        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,o =>
-	        {
-		        var keyBytes = Encoding.UTF8.GetBytes(jwt["SecurityKey"]);
+	    {
+	        o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+	        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+	    })
+	    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,o =>
+	    {
+	        var keyBytes = Encoding.UTF8.GetBytes(jwt["SecurityKey"]);
 
-		        o.TokenValidationParameters = new TokenValidationParameters
-		        {
-			        ValidateIssuer = true,
-			        ValidateAudience = true,
-			        ValidateLifetime = true,
-			        ValidateIssuerSigningKey = true,
-			        ValidIssuer = jwt["Issuer"],
-			        ValidAudience = jwt["Audience"],
-			        IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
-		        };
-	        });
-}
-
-// TODO: remove or disable if using Blazor client
-void AddStandardAuthentication(IServiceCollection services)
-{
-	services
-		.AddAuthentication(o =>
-		{
-			o.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-			o.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-			o.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
-			o.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
-		})
-		.AddCookie(IdentityConstants.ApplicationScheme, o =>
-		{
-			o.Cookie.Name = IdentityConstants.ApplicationScheme;
-			o.Cookie.SameSite = SameSiteMode.Strict;
-			o.ExpireTimeSpan = TimeSpan.FromHours(24);
-			o.LoginPath = Urls.Account.Login;
-			o.LogoutPath = Urls.Account.Logout;
-			o.AccessDeniedPath = Urls.Account.Forbidden;
-			o.SlidingExpiration = true;
-		});
+	        o.TokenValidationParameters = new TokenValidationParameters
+	        {
+		        ValidateIssuer = true,
+		        ValidateAudience = true,
+		        ValidateLifetime = true,
+		        ValidateIssuerSigningKey = true,
+		        ValidIssuer = jwt["Issuer"],
+		        ValidAudience = jwt["Audience"],
+		        IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
+	        };
+	    });
 }
 
 void AddCustomAuthorization(IServiceCollection services)
 {
 	var schemes = new List<string>
 	{
-		JwtBearerDefaults.AuthenticationScheme, // TODO: remove or disable if using SSR
-		IdentityConstants.ApplicationScheme // TODO: remove or disable if using Blazor client
+		JwtBearerDefaults.AuthenticationScheme
 	};
 
 	// Configure Authorization pipelines
