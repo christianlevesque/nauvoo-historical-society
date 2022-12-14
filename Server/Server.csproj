@@ -17,22 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="../Repositories/Repositories.csproj" />
 		<ProjectReference Include="../Services/Services.csproj" />
-		<ProjectReference Include="../Core/Core.csproj" />
-		<ProjectReference Include="..\Client\Client.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\Privacy.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\Shared\_Footer.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\Shared\_Layout.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\Shared\_Meta.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\Shared\_NarrowLayout.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\Shared\_StandardNav.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
-	  <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
 	</ItemGroup>
 
 </Project>

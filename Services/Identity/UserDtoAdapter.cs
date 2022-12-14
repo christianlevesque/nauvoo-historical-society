@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Core.Account;
 using Autoinjector;
 using Microsoft.Extensions.DependencyInjection;
-using Repositories.Identity;
 
 namespace Services.Identity;
 

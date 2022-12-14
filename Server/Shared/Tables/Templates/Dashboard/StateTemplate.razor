@@ -1,0 +1,20 @@
+@using Server.Tools
+@using Services.Infrastructure
+@inherits RowTemplateBase<StateDto>
+
+<MudTd DataLabel="Name">
+	@Context.Name
+</MudTd>
+
+<MudTd DataLabel="Abbreviation">
+	@Context.Abbreviation
+</MudTd>
+
+<MudTd DataLabel="Actions">
+	<PrimaryIconButton Link="@($"{Urls.Dashboard.States.Edit}/{Context.Id}")"
+	                   Title="@($"Edit state {Context.Name}")"
+	                   Icon="@Icons.Material.Filled.Edit" />
+	<ErrorIconButton Title="@($"Delete state {Context.Name}")"
+	                 Icon="@Icons.Material.Filled.DeleteForever"
+	                 OnClick="() => DeleteState(Context.Id)"/>
+</MudTd>

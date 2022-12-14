@@ -1,0 +1,11 @@
+@using Server.Tools
+@layout StandaloneNarrowLayout
+@attribute [Route(Urls.Account.Confirm.Successful)]
+@attribute [AllowAnonymous]
+
+<DocTitle Title="Account confirmed"/>
+
+<Heading1>Account confirmed</Heading1>
+<MudText>
+	Your account has been confirmed successfully. You can now <MudLink Href="@Urls.Account.Login">log in</MudLink>.
+</MudText>

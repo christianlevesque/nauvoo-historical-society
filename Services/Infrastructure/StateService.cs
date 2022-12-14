@@ -2,12 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Autoinjector;
-using Core;
-using Repositories.Infrastructure;
 using Services.Errors;
-using Core.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Repositories;
 
 namespace Services.Infrastructure;
 

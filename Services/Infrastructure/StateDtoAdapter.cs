@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
 using Autoinjector;
-using Core.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Repositories.Infrastructure;
 
 namespace Services.Infrastructure;
 

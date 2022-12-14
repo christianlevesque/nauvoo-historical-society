@@ -1,0 +1,32 @@
+﻿@using Server.Tools
+@using Services
+@using Services.Infrastructure
+@inherits FormPage<AddState, ICrudService<StateDto>, StateDto>
+
+<DocTitle Title="Add new state"/>
+
+<StandardForm Model="Model"
+              OnSubmit="OnSubmit"
+              Title="Add new state"
+              SubmitText="Add state">
+	<Information>
+		<SuccessMessage Message="@SuccessMessage"/>
+	</Information>
+
+	<Fields>
+		<MudTextField @bind-Value="@Model.Name"
+		              For="() => Model.Name"
+		              Label="Name"
+		              Immediate/>
+		<MudTextField @bind-Value="@Model.Abbreviation"
+		              For="() => Model.Abbreviation"
+		              Label="Abbreviation"
+		              Immediate/>
+	</Fields>
+
+	<MoreActions>
+		<SecondaryButton Link="@Urls.Dashboard.States.Index">
+			Back to states listing
+		</SecondaryButton>
+	</MoreActions>
+</StandardForm>

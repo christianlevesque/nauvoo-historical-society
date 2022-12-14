@@ -4,14 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Core.Account;
 using Autoinjector;
-using Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Repositories.Identity;
 using Services.Email;
 using Services.Errors;
 
@@ -91,7 +88,7 @@ public class AccountService : IAccountService
 	}
 
 	/// <inheritdoc/>
-	public async Task<ServiceResult<TokenDto>> Login(LoginDto login)
+	public async Task<ServiceResult<bool>> Login(LoginDto login)
 	{
 		// Log honeypot time-to-complete for analytics purposes
 		_logger.LogInformation("Form submission completed in {time} seconds", login.TimeToComplete.TotalSeconds);
@@ -100,7 +97,7 @@ public class AccountService : IAccountService
 		if (login.IsSpambot)
 		{
 			_logger.LogError("Spambot detected! Value passed to honeypot was '{value}'", login.SecretKeyField);
-			return ServiceResult<TokenDto>.Ok();
+			return ServiceResult<bool>.Ok(true);
 		}
 
 		// Check if the account name exists
@@ -111,13 +108,13 @@ public class AccountService : IAccountService
 		// If still not, return unauthorized
 		if (user == null)
 		{
-			return ServiceResult<TokenDto>.NotFound(ErrorMessages.Account.LoginFailedNotFound);
+			return ServiceResult<bool>.NotFound(ErrorMessages.Account.LoginFailedNotFound);
 		}
 
 		// If user is locked out, tell them when the lockout date ends
 		if (await _userService.IsLockedOutAsync(user))
 		{
-			return ServiceResult<TokenDto>.Unauthorized(ErrorMessages.Account.GetLockoutMessage(user.LockoutEnd));
+			return ServiceResult<bool>.Unauthorized(ErrorMessages.Account.GetLockoutMessage(user.LockoutEnd));
 		}
 
 		login.AccountName = user.UserName;
@@ -127,18 +124,16 @@ public class AccountService : IAccountService
 		// resend their verification email
 		if (!await _userService.CheckPasswordAsync(user, login.Password))
 		{
-			return ServiceResult<TokenDto>.Unauthorized(ErrorMessages.Account.LoginFailedInvalid);
+			return ServiceResult<bool>.Unauthorized(ErrorMessages.Account.LoginFailedInvalid);
 		}
 
 		if (!user.EmailConfirmed)
 		{
 			await SendWelcomeEmail(user);
-			return ServiceResult<TokenDto>.Unauthorized(ErrorMessages.Account.LoginFailedNotConfirmed);
+			return ServiceResult<bool>.Unauthorized(ErrorMessages.Account.LoginFailedNotConfirmed);
 		}
 
-		var token = await _signInService.SignInApiUser(user);
-
-		return ServiceResult<TokenDto>.Ok(new TokenDto(token));
+		return ServiceResult<bool>.Ok(true);
 	}
 
 	/// <inheritdoc/>

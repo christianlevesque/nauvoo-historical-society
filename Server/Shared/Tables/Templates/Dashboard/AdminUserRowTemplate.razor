@@ -1,0 +1,11 @@
+@using Server.Tools
+@using Services.Identity
+@inherits Server.Shared.Tables.Templates.RowTemplateBase<ApplicationUserDto>
+
+<MudTd DataLabel="Username">@Context.UserName</MudTd>
+<MudTd DataLabel="Email address">@Context.Email</MudTd>
+<MudTd DataLabel="Actions">
+	<PrimaryIconButton Link="@($"{Urls.Dashboard.Users.Index}/{Context.Id}")"
+	                   Title="@($"View user {Context.UserName}")"
+	                   Icon="@Icons.Material.Filled.RemoveRedEye"/>
+</MudTd>

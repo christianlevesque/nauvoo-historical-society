@@ -58,7 +58,6 @@ try
 		app.UseWebAssemblyDebugging();
 	}
 
-	app.UseBlazorFrameworkFiles();
 	app.UseStaticFiles();
 
 	app.UseSerilogRequestLogging();
@@ -71,12 +70,10 @@ try
 
 	app.UseAuthentication();
 	app.UseAuthorization();
-	app.UseEndpoints(e =>
-	{
-		e.MapControllers();
-		e.MapRazorPages();
-		e.MapFallbackToPage("/_Host");
-	});
+	app.MapRazorPages();
+
+	app.MapBlazorHub();
+	app.MapFallbackToPage("/_Host");
 
 	app.Run();
 }

@@ -1,0 +1,31 @@
+@using Services.Identity
+@inherits FormPage<EmailChangeIndex, IAccountService, InitiateEmailChangeDto>
+
+<DocTitle Title="Change your email"/>
+
+<StandardForm Model="@Model"
+              OnSubmit="OnSubmit"
+              Title="Change email"
+              SubmitText="Update email">
+	<Information>
+		<ErrorMessage Message="@ErrorMessage"/>
+	</Information>
+
+	<Fields>
+		<MudTextField @bind-Value="Model.Email"
+		              For="() => Model.Email"
+		              Label="Enter your new email address"
+		              InputType="InputType.Email"
+		              Immediate/>
+		<MudTextField @bind-Value="Model.ConfirmEmail"
+		              For="() => Model.ConfirmEmail"
+		              Label="Confirm your new email address"
+		              InputType="InputType.Email"
+		              Immediate/>
+		<MudTextField @bind-Value="Model.ConfirmPassword"
+		              For="() => Model.ConfirmPassword"
+		              Label="Confirm your password"
+		              InputType="InputType.Password"
+		              Immediate/>
+	</Fields>
+</StandardForm>

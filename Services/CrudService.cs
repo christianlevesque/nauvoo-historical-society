@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Repositories;
+using Services;
 using Services.Errors;
-using Core;
+using Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services;

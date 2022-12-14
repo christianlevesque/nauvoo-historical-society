@@ -3,15 +3,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autoinjector;
-using Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using Repositories.Identity;
-using Core.Account;
-using Core.Users;
+using Services.Identity;
+using Services.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Services.Email;
-using Services.Identity;
 
 namespace Services.Admin;
 

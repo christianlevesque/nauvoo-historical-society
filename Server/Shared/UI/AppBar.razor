@@ -1,0 +1,10 @@
+@using Server.Tools
+
+<MudAppBar>
+	<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+	#sitename# @* TODO: Set up site identity *@
+</MudAppBar>
+<MudDrawer @bind-Open="@_drawerOpen"
+           Variant="DrawerVariant.Temporary">
+	@ChildContent
+</MudDrawer>
