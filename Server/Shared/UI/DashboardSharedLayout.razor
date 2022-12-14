@@ -1,14 +1,141 @@
+@using Server.Tools
+@using Services
+@inherits SharedLayoutBase
+
 <AppTheme/>
 
 <MudLayout>
-	<DashboardDrawer/>
+	<MudHidden Breakpoint="Breakpoint.MdAndUp">
+		<MudAppBar>
+			<MudIconButton Color="Color.Inherit"
+			               Edge="Edge.Start"
+			               Icon="@Icons.Material.Filled.Menu"
+			               OnClick="ToggleDrawer"/>
+			#sitename# @* TODO: Set up site identity *@
+		</MudAppBar>
+		<MudDrawer @bind-Open="@DrawerOpen"
+		           Variant="DrawerVariant.Temporary">
+			<div class="full-height d-flex flex-column justify-space-between">
+            	<div>
+            		<DrawerHeader/>
+    
+            		<MudDivider Class="my-2"/>
+    
+            		<MudNavMenu>
+            			<MudNavLink Href="@Urls.Dashboard.Index"
+            			            Icon="@Icons.Material.Filled.SpaceDashboard"
+            			            Match="NavLinkMatch.All">
+            				Dashboard
+            			</MudNavLink>
+            			<MudNavGroup Icon="@Icons.Material.Filled.AccountCircle"
+            			             Title="My account">
+            				<MudNavLink Href="@Urls.Dashboard.MyAccount.EmailChange.Index"
+            				            Icon="@Icons.Material.Filled.Email">
+            					Email
+            				</MudNavLink>
+            				<MudNavLink Href="@Urls.Dashboard.MyAccount.PasswordChange.Index"
+            				            Icon="@Icons.Material.Filled.Lock">
+            					Password
+            				</MudNavLink>
+            				<MudNavLink Href="@Urls.Dashboard.MyAccount.PersonalData"
+            				            Icon="@Icons.Material.Filled.Archive">
+            					Personal data
+            				</MudNavLink>
+            			</MudNavGroup>
+    
+            			<AuthorizeView Roles="@Roles.Admin">
+            				<MudNavLink Href="@Urls.Dashboard.Users.Index"
+            				            Icon="@Icons.Material.Filled.SupervisorAccount">
+            					Users
+            				</MudNavLink>
+            				<MudNavLink Href="@Urls.Dashboard.States.Index"
+            				            Icon="@Icons.Material.Filled.AccountBalance">
+            					States
+            				</MudNavLink>
+            			</AuthorizeView>
+    
+            			@* These belong at the bottom of the list *@
+            			<MudNavLink Href="@Urls.Home"
+            			            Icon="@Icons.Material.Filled.Home"
+            			            Match="NavLinkMatch.All">
+            				Return home
+            			</MudNavLink>
+            			<MudNavLink Href="@Urls.Account.Logout"
+            			            Icon="@Icons.Material.Filled.Logout">
+            				Log out
+            			</MudNavLink>
+            		</MudNavMenu>
+            	</div>
+            </div>
+		</MudDrawer>
+	</MudHidden>
+
+	<MudHidden Breakpoint="Breakpoint.SmAndDown">
+		<MudDrawer Open="@true"
+		           Variant="DrawerVariant.Persistent">
+			<div class="full-height d-flex flex-column justify-space-between">
+				<div>
+					<DrawerHeader/>
+
+					<MudDivider Class="my-2"/>
+
+					<MudNavMenu>
+						<MudNavLink Href="@Urls.Dashboard.Index"
+						            Icon="@Icons.Material.Filled.SpaceDashboard"
+						            Match="NavLinkMatch.All">
+							Dashboard
+						</MudNavLink>
+						<MudNavGroup Icon="@Icons.Material.Filled.AccountCircle"
+						             Title="My account">
+							<MudNavLink Href="@Urls.Dashboard.MyAccount.EmailChange.Index"
+							            Icon="@Icons.Material.Filled.Email">
+								Email
+							</MudNavLink>
+							<MudNavLink Href="@Urls.Dashboard.MyAccount.PasswordChange.Index"
+							            Icon="@Icons.Material.Filled.Lock">
+								Password
+							</MudNavLink>
+							<MudNavLink Href="@Urls.Dashboard.MyAccount.PersonalData"
+							            Icon="@Icons.Material.Filled.Archive">
+								Personal data
+							</MudNavLink>
+						</MudNavGroup>
+
+						<AuthorizeView Roles="@Roles.Admin">
+							<MudNavLink Href="@Urls.Dashboard.Users.Index"
+							            Icon="@Icons.Material.Filled.SupervisorAccount">
+								Users
+							</MudNavLink>
+							<MudNavLink Href="@Urls.Dashboard.States.Index"
+							            Icon="@Icons.Material.Filled.AccountBalance">
+								States
+							</MudNavLink>
+						</AuthorizeView>
+
+						@* These belong at the bottom of the list *@
+						<MudNavLink Href="@Urls.Home"
+						            Icon="@Icons.Material.Filled.Home"
+						            Match="NavLinkMatch.All">
+							Return home
+						</MudNavLink>
+						<MudNavLink Href="@Urls.Account.Logout"
+						            Icon="@Icons.Material.Filled.Logout">
+							Log out
+						</MudNavLink>
+					</MudNavMenu>
+				</div>
+			</div>
+		</MudDrawer>
+	</MudHidden>
 
 	<MudMainContent Class="full-height d-flex flex-column">
 		<div class="flex-grow-1">
 			@if (LoadingState.Loading)
 			{
-				<div class="absolute mud-width-full" style="top:0;left:0;right:0;z-index:9999">
-					<MudProgressLinear Color="Color.Primary" Indeterminate/>
+				<div class="absolute mud-width-full"
+				     style="top:0;left:0;right:0;z-index:9999">
+					<MudProgressLinear Color="Color.Primary"
+					                   Indeterminate/>
 				</div>
 			}
 

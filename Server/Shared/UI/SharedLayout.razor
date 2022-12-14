@@ -1,11 +1,48 @@
 @using Server.Tools.Themes
+@using Server.Tools
+
+@inherits SharedLayoutBase
 
 <AppTheme/>
 
 <MudLayout>
-	<AppBar>
-		<MainLayoutDrawerContent/>
-	</AppBar>
+	<MudAppBar>
+		<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer" />
+		#sitename# @* TODO: Set up site identity *@
+	</MudAppBar>
+
+    <MudDrawer @bind-Open="@DrawerOpen"
+               Variant="DrawerVariant.Temporary">
+    	<MudNavMenu>
+        	<DrawerHeader/>
+
+        	<MudDivider Class="my-2"/>
+
+        	<MudNavLink Href="@Urls.Home"
+        	            Match="NavLinkMatch.All">
+        		Home
+        	</MudNavLink>
+
+        	<AuthorizeView>
+        		<Authorized>
+        			<MudNavLink Href="@Urls.Dashboard.Index">
+        				My dashboard
+        			</MudNavLink>
+        			<MudNavLink Href="@Urls.Account.Logout">
+        				Log out
+        			</MudNavLink>
+        		</Authorized>
+        		<NotAuthorized>
+        			<MudNavLink Href="@Urls.Account.Register.Index">
+        				Register
+        			</MudNavLink>
+        			<MudNavLink Href="@Urls.Account.Login">
+        				Log in
+        			</MudNavLink>
+        		</NotAuthorized>
+        	</AuthorizeView>
+        </MudNavMenu>
+    </MudDrawer>
 
 	<MudMainContent Class="full-height d-flex flex-column">
 		<div class="flex-grow-1">
