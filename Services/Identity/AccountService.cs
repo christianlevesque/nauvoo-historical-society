@@ -133,12 +133,17 @@ public class AccountService : IAccountService
 			return ServiceResult<bool>.Unauthorized(ErrorMessages.Account.LoginFailedNotConfirmed);
 		}
 
+		await _signInService.SignInAsync(user, true);
+
 		return ServiceResult<bool>.Ok(true);
 	}
 
 	/// <inheritdoc/>
-	public Task<ServiceResult<bool>> Logout() =>
-		throw new InvalidOperationException("It is an invalid operation to try to log out from a stateless API");
+	public async Task<ServiceResult<bool>> Logout()
+	{
+		await _signInService.SignOutAsync();
+		return ServiceResult<bool>.Ok();
+	}
 
 	/// <inheritdoc/>
 	public async Task<ServiceResult<bool>> ConfirmAccount(ConfirmAccountDto account)

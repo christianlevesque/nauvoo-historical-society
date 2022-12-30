@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Server.Shared;
 using Server.Tools;
 
@@ -22,6 +23,9 @@ public partial class EmailChangeConfirm
 	[SupplyParameterFromQuery]
 	public string Code { get; set; } = default!;
 
+	[CascadingParameter]
+	private Task<AuthenticationState> AuthState { get; set; } = default!;
+
 	protected override async Task OnInitializedAsync()
 	{
 		ErrorMessage = "We are verifying your new email address. Please wait...";
@@ -30,7 +34,8 @@ public partial class EmailChangeConfirm
 		Model.NewEmail = Email;
 		Model.VerificationCode = Code;
 
-		await SubmitRequest(() => Service.PerformEmailChange(Model, new ClaimsPrincipal()));
+		var authState = await AuthState;
+		await SubmitRequest(() => Service.PerformEmailChange(Model, authState.User));
 		if (WasSuccessful)
 		{
 			NavManager.NavigateTo(Urls.Dashboard.MyAccount.EmailChange.Successful);

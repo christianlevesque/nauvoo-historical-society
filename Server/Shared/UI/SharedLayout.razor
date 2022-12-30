@@ -7,12 +7,15 @@
 
 <MudLayout>
 	<MudAppBar>
-		<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer" />
+		<MudIconButton id="menu-toggler"
+		               Icon="@Icons.Material.Filled.Menu"
+		               Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer" />
 		#sitename# @* TODO: Set up site identity *@
 	</MudAppBar>
 
     <MudDrawer @bind-Open="@DrawerOpen"
-               Variant="DrawerVariant.Temporary">
+               Variant="DrawerVariant.Temporary"
+               id="menu-drawer">
     	<MudNavMenu>
         	<DrawerHeader/>
 

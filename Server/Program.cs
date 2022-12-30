@@ -6,6 +6,8 @@ using Server.Policies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,7 +45,7 @@ try
 			.WriteTo.Debug();
 	});
 
-	AddApiAuthentication(builder.Services, builder.Configuration);
+	AddAuthentication(builder.Services);
 	AddCustomAuthorization(builder.Services);
 
 	builder.Services
@@ -87,31 +89,22 @@ finally
 	Log.CloseAndFlush();
 }
 
-void AddApiAuthentication(IServiceCollection services, IConfiguration config)
+void AddAuthentication(IServiceCollection services)
 {
-	var jwt = config.GetSection("Jwt");
-
-	// Set up Authentication
 	services.AddAuthentication(o =>
-	    {
-	        o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-	        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-	    })
-	    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,o =>
-	    {
-	        var keyBytes = Encoding.UTF8.GetBytes(jwt["SecurityKey"]);
-
-	        o.TokenValidationParameters = new TokenValidationParameters
-	        {
-		        ValidateIssuer = true,
-		        ValidateAudience = true,
-		        ValidateLifetime = true,
-		        ValidateIssuerSigningKey = true,
-		        ValidIssuer = jwt["Issuer"],
-		        ValidAudience = jwt["Audience"],
-		        IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
-	        };
-	    });
+		{
+			o.DefaultScheme = IdentityConstants.ApplicationScheme;
+		})
+		.AddCookie(IdentityConstants.ApplicationScheme, o =>
+		{
+			o.Cookie.Name = IdentityConstants.ApplicationScheme;
+			o.Cookie.SameSite = SameSiteMode.Strict;
+			o.ExpireTimeSpan = TimeSpan.FromHours(24);
+			o.LoginPath = Urls.Account.Login;
+			o.LogoutPath = Urls.Account.Logout;
+			o.AccessDeniedPath = Urls.Account.Forbidden;
+			o.SlidingExpiration = true;
+		});
 }
 
 void AddCustomAuthorization(IServiceCollection services)

@@ -10,6 +10,7 @@ public static class Urls
 		public const string Login = $"{Prefix}/login";
 		public const string Logout = $"{Prefix}/logout";
 		public const string Deleted = $"{Prefix}/deleted";
+		public const string Forbidden = $"{Prefix}/forbidden";
 
 		public static class Register
 		{
