@@ -1,0 +1,12 @@
+@import '~@materializecss/materialize/sass/components/color-variables';
+
+$primary-color: color('deep-purple', 'base');
+$primary-color-light: color('deep-purple', 'lighten-2');
+$primary-color-dark: color('deep-purple', 'darken-3');
+
+$secondary-color: color("teal", "base");
+$success-color: color("green", "base");
+$error-color: color("red", "base");
+$link-color: color("light-blue", "base");
+
+$font-stack: Roboto, sans-serif;

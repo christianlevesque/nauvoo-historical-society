@@ -1,0 +1,64 @@
+@using Sienar.Identity
+@inject SignInService SignInService
+@inject UserService UserService
+
+@{
+	var links = new List<(string, string)>
+	{
+		("Home", Urls.Home),
+		("Privacy", Urls.Privacy)
+	};
+
+	if (SignInService.IsSignedIn(User))
+	{
+		var user = await UserService.GetUserAsync(User);
+		links.Add(($"Welcome, {user.UserName}", Urls.Home));
+		links.Add(("Log out", Urls.Account.Logout));
+	}
+	else
+	{
+		links.Add(("Log in", Urls.Account.Login));
+	}
+}
+
+<div class="navbar-fixed">
+	<nav>
+    	<div class="nav-wrapper">
+    		<a asp-area=""
+    		   asp-page="@Urls.Home"
+    		   class="brand-logo">
+    		</a>
+	        <a href="#"
+	           data-target="mobile-nav"
+	           class="sidenav-trigger">
+		        <i class="material-icons">menu</i>
+	        </a>
+    		<ul class="right hide-on-med-and-down">
+            	@foreach (var link in links)
+            	{
+            		var (text, url) = link;
+		            <li>
+			            <a asp-area=""
+			               asp-page="@url">
+				            @text
+			            </a>
+		            </li>
+            	}
+            </ul>
+    	</div>
+    </nav>
+</div>
+
+<ul class="sidenav"
+    id="mobile-nav">
+	@foreach (var link in links)
+	{
+		var (text, url) = link;
+		<li>
+			<a asp-area=""
+			   asp-page="@url">
+				@text
+			</a>
+		</li>
+	}
+</ul>

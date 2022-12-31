@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+
+		<PackageId>Sienar.UI</PackageId>
+		<Title>Sienar.UI</Title>
+		<PackageVersion>0.1.0</PackageVersion>
+		<PackageReleaseNotes>
+			Initial beta release
+		</PackageReleaseNotes>
+		<Authors>Christian LeVesque</Authors>
+		<Description>
+			The Razor Pages UI of the Sienar CMS framework
+		</Description>
+		<Copyright>Copyright Christian LeVesque 2023</Copyright>
+		<PackageProjectUrl>https://www.razorforms.com</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/christianlevesque/RazorForms</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>razor page form ui component materialize material</PackageTags>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../Sienar.Core/Sienar.Core.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="RazorForms" Version="1.0.0"/>
+		<PackageReference Include="RazorForms.Materialize" Version="1.0.1"/>
+	</ItemGroup>
+
+</Project>

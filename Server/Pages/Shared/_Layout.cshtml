@@ -1,48 +1,25 @@
-@namespace Server.Pages.Shared
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8"/>
-	<meta name="viewport"
-	      content="width=device-width, initial-scale=1.0"/>
-	<base href="/"/>
+	<partial name="_Meta"/>
 
-	<!-- Stock MudBlazor -->
-	<link rel="preconnect"
-	      href="https://fonts.gstatic.com"/>
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-	      rel="stylesheet"/>
+	<title>@ViewData[ViewDataKeys.Title] | #sitename#</title>
 
-	<!-- MudBlazor -->
-	<link href="/_content/MudBlazor/MudBlazor.min.css"
-	      rel="stylesheet"/>
-	<link href="/css/main.css"
-	      rel="stylesheet"/>
-	<!-- uncomment for component-scoped CSS files -->
-	<!--    <link href="/Client.styles.css" rel="stylesheet" />-->
-	@await RenderSectionAsync("Seo", true);
+	@await RenderSectionAsync("Seo", required: false)
 </head>
+<body class="@CssClasses.Body">
 
-<body>
+<partial name="_StandardNav"/>
 
-@RenderBody()
+<main class="@CssClasses.Main"
+      role="main">
+	@RenderBody()
+</main>
 
-<div id="blazor-error-ui">
-    <environment include="Staging,Production">
-        An error has occurred. This application may no longer respond until reloaded.
-    </environment>
-    <environment include="Development">
-        An unhandled exception has occurred. See browser dev tools for details.
-    </environment>
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+<partial name="_Footer"/>
 
-@await RenderSectionAsync("Scripts", true)
-<script src="/_content/MudBlazor/MudBlazor.min.js"></script>
-<script src="/js/interop.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
 </body>
-
 </html>

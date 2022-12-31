@@ -1,7 +1,7 @@
 ﻿using System;
-using Services;
+using Sienar;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Services.Infrastructure;
+using Sienar.Infrastructure;
 
 #nullable disable
 

@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Server.Policies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Server.Tools;
+using Server.Tools.Constants;
 using Services;
 
 var path = $"{Directory.GetCurrentDirectory()}/log";
@@ -50,14 +47,13 @@ try
 
 	builder.Services
 		.AddServices(builder.Configuration, builder.Environment)
-		.AddServerServices(builder.Environment, builder.Configuration);
+		.AddServerServices();
 
 	var app = builder.Build();
 
 	if (app.Environment.IsDevelopment())
 	{
 		app.UseDeveloperExceptionPage();
-		app.UseWebAssemblyDebugging();
 	}
 
 	app.UseStaticFiles();
@@ -65,17 +61,9 @@ try
 	app.UseSerilogRequestLogging();
 	app.UseRouting();
 
-	if (app.Environment.IsDevelopment())
-	{
-		app.UseCors();
-	}
-
 	app.UseAuthentication();
 	app.UseAuthorization();
 	app.MapRazorPages();
-
-	app.MapBlazorHub();
-	app.MapFallbackToPage("/_Host");
 
 	app.Run();
 }
@@ -109,28 +97,17 @@ void AddAuthentication(IServiceCollection services)
 
 void AddCustomAuthorization(IServiceCollection services)
 {
-	var schemes = new List<string>
-	{
-		JwtBearerDefaults.AuthenticationScheme
-	};
-
 	// Configure Authorization pipelines
 	services.AddAuthorization(options =>
 	{
-		var defaultPolicy = new AuthorizationPolicyBuilder
-		{
-			AuthenticationSchemes = schemes
-		};
-
-		options.DefaultPolicy = defaultPolicy
-			.RequireAuthenticatedUser()
-		    .Build();
-
 		options.AddPolicy(
 			NotLoggedInRequirement.Name,
 			policy =>
 			{
-				policy.AuthenticationSchemes = schemes;
+				policy.AuthenticationSchemes = new List<string>
+				{
+					IdentityConstants.ApplicationScheme
+				};
 				policy.Requirements.Add(new NotLoggedInRequirement());
 			}
 		);

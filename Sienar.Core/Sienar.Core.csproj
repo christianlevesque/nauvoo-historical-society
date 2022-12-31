@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Sienar</RootNamespace>
+
+		<PackageId>Sienar.Core</PackageId>
+		<Title>Sienar.Core</Title>
+		<PackageVersion>0.1.0</PackageVersion>
+		<PackageReleaseNotes>
+			Initial beta release
+		</PackageReleaseNotes>
+		<Authors>Christian LeVesque</Authors>
+		<Description>
+			The core of the Sienar CMS framework, without any UI files
+		</Description>
+		<Copyright>Copyright Christian LeVesque 2023</Copyright>
+		<PackageProjectUrl>https://github.com/</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/christianlevesque/RazorForms</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>razor page form ui component materialize material</PackageTags>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autoinjector" Version="1.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Include="SendGrid" Version="9.20.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Sienar.Extensions\Sienar.Extensions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+</Project>

@@ -6,11 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Services;
-using Services.Identity;
 using SendGrid;
-using Services.Email;
-using Services.Identity;
+using Sienar;
+using Sienar.Email;
+using Sienar.Identity;
 
 namespace Services;
 
@@ -81,16 +80,13 @@ public static class ServiceCollectionExtensions
 
 	private static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration config)
 	{
-		return services
-			.Configure<EmailOptions>(config.GetSection("Email"))
-			.Configure<JwtOptions>(config.GetSection("Jwt")); // TODO: remove or disable if using SSR
+		return services.Configure<EmailOptions>(config.GetSection("Email"));
 	}
 
 	private static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
 	{
 		return services
 			.AddScoped<ISendGridClient>(p => new SendGridClient(config["Email:ApiKey"]))
-			.AutoinjectServicesFromAssembly(typeof(IRepository<>).Assembly)
 			.AutoinjectServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
 	}
 }

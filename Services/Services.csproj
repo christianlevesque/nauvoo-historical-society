@@ -19,4 +19,9 @@
 		<PackageReference Include="Serilog" Version="2.10.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="../Sienar.Core/Sienar.Core.csproj" />
+	  <ProjectReference Include="../Sienar.Extensions/Sienar.Extensions.csproj" />
+	</ItemGroup>
+
 </Project>

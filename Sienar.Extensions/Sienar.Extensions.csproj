@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Sienar</RootNamespace>
+
+		<PackageId>Sienar.Extensions</PackageId>
+		<Title>Sienar.Extensions</Title>
+		<PackageVersion>0.1.0</PackageVersion>
+		<PackageReleaseNotes>
+			Initial beta release
+		</PackageReleaseNotes>
+		<Authors>Christian LeVesque</Authors>
+		<Description>
+			Extensions for the Sienar CMS framework that enable developers to create plugins or modify framework internals
+		</Description>
+		<Copyright>Copyright Christian LeVesque 2023</Copyright>
+		<PackageProjectUrl>https://www.razorforms.com</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/christianlevesque/RazorForms</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>razor page form ui component materialize material</PackageTags>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	</PropertyGroup>
+
+</Project>
