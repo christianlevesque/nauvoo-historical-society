@@ -1,0 +1,76 @@
+@import '~@materializecss/materialize/sass/components/variables';
+
+$spacer: 4px;
+$iterations: 20;
+
+$areas: (
+	'': '',
+	'l': '-left',
+	'r': '-right',
+	't': '-top',
+	'b': '-bottom',
+	'x': '-left' '-right',
+	'y': '-top' '-bottom'
+);
+
+$types: (
+	'm': (
+		'prop': 'margin',
+		'variants': '' 'n'
+	),
+	'p': (
+		'prop': 'padding',
+		'variants': ''
+	)
+);
+
+$breakpoint-values: (
+	'': '',
+	'm': $medium-and-up,
+	'l': $large-and-up,
+	'xl': $extra-large-and-up
+);
+
+@mixin apply($prefix, $properties, $value, $variant) {
+	@if $variant == 'n' {
+		$value: 0 - $value;
+	}
+
+	@if $variant != 'n' or $value != 0px {
+		@each $prop in $properties {
+			#{$prefix}#{$prop}: $value;
+		}
+	}
+}
+
+@mixin create-rules($name) {
+	@for $i from 0 through $iterations {
+		$value: $i * $spacer;
+
+		@each $type, $data in $types {
+			@each $suffix, $properties in $areas {
+				@each $variant in map-get($data, 'variants') {
+					@if $name == '' {
+						.#{$type}#{$suffix}-#{$variant}#{$i} {
+							@include apply(map-get($data, 'prop'), $properties, $value, $variant);
+						}
+					} @else {
+						.#{$type}#{$suffix}-#{$name}-#{$variant}#{$i} {
+							@include apply(map-get($data, 'prop'), $properties, $value, $variant);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@each $name, $bp in $breakpoint-values {
+	@if $name == '' {
+		@include create-rules($name);
+	} @else {
+		@media #{$bp} {
+			@include create-rules($name);
+		}
+	}
+}

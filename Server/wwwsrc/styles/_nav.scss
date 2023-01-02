@@ -1,0 +1,5 @@
+@import '~@materializecss/materialize/sass/components/color-variables';
+
+.sidenav-trigger.btn-flat {
+	color: color('shades', 'white');
+}

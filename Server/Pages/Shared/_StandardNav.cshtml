@@ -9,15 +9,19 @@
 		("Privacy", Urls.Privacy)
 	};
 
+	var topNavLinks = new List<(string, string)>(links);
+	var sideNavLinks = new List<(string, string)>(links);
+
 	if (SignInService.IsSignedIn(User))
 	{
 		var user = await UserService.GetUserAsync(User);
-		links.Add(($"Welcome, {user.UserName}", Urls.Home));
-		links.Add(("Log out", Urls.Account.Logout));
+		topNavLinks.Add(($"Welcome, {user.UserName}", Urls.Dashboard.DashboardIndex));
+		topNavLinks.Add(("Log out", Urls.Account.Logout));
+		sideNavLinks.Add(("Dashboard", Urls.Dashboard.DashboardIndex));
 	}
 	else
 	{
-		links.Add(("Log in", Urls.Account.Login));
+		topNavLinks.Add(("Log in", Urls.Account.Login));
 	}
 }
 
@@ -28,13 +32,12 @@
     		   asp-page="@Urls.Home"
     		   class="brand-logo">
     		</a>
-	        <a href="#"
-	           data-target="mobile-nav"
-	           class="sidenav-trigger">
+	        <button data-target="mobile-nav"
+	                class="sidenav-trigger btn-flat">
 		        <i class="material-icons">menu</i>
-	        </a>
+	        </button>
     		<ul class="right hide-on-med-and-down">
-            	@foreach (var link in links)
+            	@foreach (var link in topNavLinks)
             	{
             		var (text, url) = link;
 		            <li>
@@ -49,16 +52,28 @@
     </nav>
 </div>
 
-<ul class="sidenav"
+<ul class="sidenav pb-5"
     id="mobile-nav">
-	@foreach (var link in links)
-	{
-		var (text, url) = link;
-		<li>
-			<a asp-area=""
-			   asp-page="@url">
-				@text
-			</a>
-		</li>
-	}
+	<div class="d-flex flex-column full-height">
+		<div class="flex-grow-1">
+			@foreach (var link in sideNavLinks)
+            {
+            	var (text, url) = link;
+            	<li>
+            		<a asp-area=""
+            		   asp-page="@url">
+            			@text
+            		</a>
+            	</li>
+            }
+		</div>
+
+		<div class="px-5">
+			<a class="btn btn-block"
+               asp-area=""
+               asp-action="@Urls.Account.Login">
+            	Log in
+            </a>
+		</div>
+	</div>
 </ul>
