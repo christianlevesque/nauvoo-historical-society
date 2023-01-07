@@ -5,7 +5,7 @@ public class ServiceResult<T>
 	/// <summary>
 	/// Creates a successful <see cref="ServiceResult{T}"/>
 	/// </summary>
-	/// <returns>a <see cref="ServiceResult<T>"/> that indicates a service call was successful</returns>
+	/// <returns>a <see cref="ServiceResult{T}"/> that indicates a service call was successful</returns>
 	public static ServiceResult<T> Ok() => new () { ServiceError = ServiceError.None };
 
 	/// <summary>
