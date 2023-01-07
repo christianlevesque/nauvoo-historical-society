@@ -51,12 +51,12 @@ public class StateService
 	{
 		if ((await Repo.Find(s => s.Id != model.Id && s.Name == model.Name, take: 1)).Any())
 		{
-			throw new AppConflictException(ErrorMessages.States.DuplicateName);
+			throw new SienarConflictException(ErrorMessages.States.DuplicateName);
 		}
 
 		if ((await Repo.Find(s => s.Id != model.Id && s.Abbreviation == model.Abbreviation, take: 1)).Any())
 		{
-			throw new AppConflictException(ErrorMessages.States.DuplicateAbbreviation);
+			throw new SienarConflictException(ErrorMessages.States.DuplicateAbbreviation);
 		}
 	}
 }

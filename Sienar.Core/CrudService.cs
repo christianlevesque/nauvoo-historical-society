@@ -145,7 +145,7 @@ public abstract class CrudService<TEntity, TDto, TKey, TRepo> : ICrudService<TDt
 				error = ServiceError.NotFound;
 				ResetMessage(message, exception.Message);
 				break;
-			case AppConflictException:
+			case SienarConflictException:
 				error = ServiceError.DataConflict;
 				ResetMessage(message, exception.Message);
 				break;
