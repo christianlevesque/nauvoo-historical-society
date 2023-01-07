@@ -1,21 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 namespace Sienar.Validation;
 
-public class RequireSpecialAttribute : ValidationAttribute
+public class RequireSpecialAttribute : RegexTestAttributeBase
 {
-	protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
-	{
-		var displayName = validationContext.DisplayName;
-		var memberName = new [] { validationContext.MemberName! };
-
-		if (value == null)
-		{
-			return new ValidationResult($"{displayName} cannot be null", memberName);
-		}
-
-		var stringVal = value.ToString();
-		return Regex.IsMatch(stringVal!, @"\W") ? ValidationResult.Success : new ValidationResult(ErrorMessage, memberName);
-	}
+	protected override ValidationResult? IsValid(
+		object? value,
+		ValidationContext context)
+		=> ValidatePatternMatches(value, context, @"\W");
 }
