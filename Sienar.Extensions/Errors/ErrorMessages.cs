@@ -6,6 +6,9 @@ namespace Sienar.Errors;
 [ExcludeFromCodeCoverage]
 public static class ErrorMessages
 {
+	public const string Database = "There was a database error.";
+	public const string ContactIt = "Please contact the IT team if your problem persists.";
+
 	public static class Account
 	{
 		public const string MustAcceptTos = "You must accept the Terms of Service to create an account.";
@@ -51,7 +54,4 @@ public static class ErrorMessages
 		public const string DataConflict = "The data you entered is not valid. Please check your data and try again.";
 		public const string DataConcurrencyConflict = "The database record you requested has been updated since you last accessed it. Please reload the page and try again.";
 	}
-
-	public const string Database = "There was a database error.";
-	public const string ContactIt = "Please contact the IT team if your problem persists.";
 }
